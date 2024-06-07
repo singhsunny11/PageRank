@@ -127,10 +127,24 @@ void print_graph_stats(const char *filename)
     printf("%s:\n",graph->name);
     printf("- num nodes: %d\n",graph->count);
     printf("- num edges: %d\n",graph->edge_count);
-    int min_indeg= 0;
-    int max_indeg= 0;
-    int min_outdeg= 0;
-    int max_outdeg= 0;
+    int min_indeg;
+    int max_indeg;
+    int min_outdeg;
+    int max_outdeg;
+    if (graph->count>0)
+    {
+    node_t *node_z= graph->nodes[0];
+    min_indeg=node_z->num_in_edges;
+    max_indeg=node_z->num_in_edges;; 
+    min_outdeg=node_z->num_out_edges;    
+    max_outdeg=node_z->num_out_edges;
+    }
+    else {
+        min_indeg=0;
+        max_indeg=0;
+        min_outdeg=0;
+        max_outdeg=0;
+    }
     for (int i=0;i<graph->count;i++){
     node_t *node= graph->nodes[i];
         if(node->num_in_edges<min_indeg)
