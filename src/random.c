@@ -20,7 +20,7 @@ node_t *random_out_edge(node_t *node){
 }
 
 
-void simulate_random_surfer(graph_t *graph, int n, double probability) {
+void simulate_random_surfer(graph_t *graph, int n, double p) {
     if (graph->count == 0) {
         return;
     }
@@ -34,7 +34,8 @@ void simulate_random_surfer(graph_t *graph, int n, double probability) {
     node_t *current = random_node(graph);
 
     for (int i=0; i<n; i++) {
-        if (current->num_out_edges == 0) {
+        double rand_prob = (double)randu(RAND_MAX) / RAND_MAX;
+        if (rand_prob < p || current->num_out_edges == 0) {
             current = random_node(graph); 
         } else {
             current = random_out_edge(current);
@@ -62,4 +63,5 @@ void simulate_random_surfer(graph_t *graph, int n, double probability) {
     }
 
     free(visit_count);
+   exit(0);
 }

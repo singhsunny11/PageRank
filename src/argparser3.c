@@ -30,7 +30,7 @@ void parse_arguments(int const argc, char **const argv){
             printf("-m N Simulate N steps of the Markov chain and output the result\n");
             printf("-s Compute and print the statistics of the graph\n");
             printf("-p P Set the parameter p to P%%. (Default: P = 10)\n");
-            exit(0);
+            exit(EXIT_SUCCESS);
         }
         case 'r': {
             char *end;
@@ -42,8 +42,8 @@ void parse_arguments(int const argc, char **const argv){
         }
         case 'p': {
                 char *end;
-                p = strtod(optarg, &end) / 100.0;
-                if (end == optarg || *end != '\0' || p < 0 || p > 1) {
+                p = strtod(optarg, &end)/100.0;
+                if (end == optarg || *end != '\0' || p <= 0 || p > 1) {
                     errx(EXIT_FAILURE, "invalid P '%s'", optarg);
                 }
                 break;
@@ -67,6 +67,7 @@ void parse_arguments(int const argc, char **const argv){
     simulate_random_surfer(graph,random_surfer_steps,p);
     free_graph(graph);
     }
+    exit(EXIT_SUCCESS);
 }
 
 

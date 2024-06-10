@@ -1,5 +1,0 @@
-digraph trial {
-A -> B;
-B -> A;
-A -> A;
-}
