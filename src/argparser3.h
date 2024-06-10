@@ -9,6 +9,7 @@ void parse_arguments(int argc, char **argv);
 extern double n;
 extern double p;
 extern char *dot_file_name;
+extern int random_surfer_steps;
 
 #endif
 
