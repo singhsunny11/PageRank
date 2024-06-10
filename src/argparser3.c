@@ -18,6 +18,11 @@ int markov_steps=0;
 void parse_arguments(int const argc, char **const argv){
    int option;
    int flag_s=0;
+   int flag_hrm=0;
+   if (argc<2) {
+    fprintf(stderr, "Invalid command line arguments\n");
+    exit(EXIT_FAILURE);
+}
     while ((option = getopt(argc, argv, "hr:m:sp:")) != -1)
     {
         switch (option)
@@ -32,6 +37,7 @@ void parse_arguments(int const argc, char **const argv){
             printf("-m N Simulate N steps of the Markov chain and output the result\n");
             printf("-s Compute and print the statistics of the graph\n");
             printf("-p P Set the parameter p to P%%. (Default: P = 10)\n");
+            flag_hrm=1;
             exit(EXIT_SUCCESS);
         }
         case 'r': {
@@ -40,6 +46,7 @@ void parse_arguments(int const argc, char **const argv){
                 if (end == optarg || *end != '\0') {
                     errx(EXIT_FAILURE, "invalid N '%s'", optarg);
                 }
+                flag_hrm=1;
                break;
         }
         case 'm':{
@@ -47,7 +54,8 @@ void parse_arguments(int const argc, char **const argv){
             markov_steps= strtoul(optarg, &end, 0);
             if(end==optarg || *end != '\0'){
                 errx(EXIT_FAILURE, "invalid N '%s'", optarg);
-            }
+            } 
+            flag_hrm=1;
             break;
         }
         case 'p': {
@@ -62,12 +70,20 @@ void parse_arguments(int const argc, char **const argv){
         flag_s=1;
             break;
         }
+       default:{
+        errx(EXIT_FAILURE, "Unknown option: %c", option);
+        break;
         } 
+    }
     }
     if (optind < argc) {
         dot_file_name = argv[optind];
     } else {
         fprintf(stderr, "No input file specified.\n");
+        exit(EXIT_FAILURE);
+    }
+    if(flag_hrm==0 && flag_s==0){
+        fprintf(stderr,"atleast one option must be provided");
         exit(EXIT_FAILURE);
     }
     if (flag_s)
