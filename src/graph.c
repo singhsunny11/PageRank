@@ -58,24 +58,26 @@ node->num_out_edges = 0;
 node->num_in_edges = 0;
 node->name=calloc(strlen(name)+1,sizeof(char));
 strcpy(node->name,name);
-graph->nodes=realloc(graph->nodes,(graph->count+1)*sizeof(node_t *));       ////
+graph->nodes=realloc(graph->nodes,(graph->count+1)*sizeof(node_t *)); 
 graph->nodes[graph->count++]=node;
 return node;
 }
 
 void add_edge_to_node(node_t *source,node_t *target)
 {
-source->outedges = realloc(source->outedges , (source ->num_out_edges + 1) * sizeof(node_t *));   ///
+source->outedges = realloc(source->outedges , (source ->num_out_edges + 1) * sizeof(node_t *));
 if (source->outedges == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
-        exit(EXIT_FAILURE); // Or handle the error appropriately
+        exit(EXIT_FAILURE);
     }
 source->outedges[source->num_out_edges]=target;
-source->num_out_edges++;     //num_edges need not be incremented for outedge as already inc in target
+source->num_out_edges++;
+
+source->num_edges++;
 target->inedges=realloc(target->inedges,(target->num_in_edges+1)*sizeof(node_t *));
 if (target->inedges == NULL) {
         fprintf(stderr,"Memory allocation failed\n");
-        exit(EXIT_FAILURE); // Or handle the error appropriately
+        exit(EXIT_FAILURE);
     }
 target->inedges[target->num_in_edges] = source;
 target->num_in_edges++;

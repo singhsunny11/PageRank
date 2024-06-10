@@ -1,6 +1,7 @@
 #include "argparser3.h"
 #include "graph.h"
 #include "random.h"
+#include "markov.h"
 #include <err.h>
 #include <getopt.h>
 #include <stdio.h>
@@ -12,11 +13,12 @@
 double p =0.1;
 char *dot_file_name;
 int random_surfer_steps=0;
+int markov_steps=0;
 
 void parse_arguments(int const argc, char **const argv){
    int option;
    int flag_s=0;
-    while ((option = getopt(argc, argv, "hr:sp:")) != -1)
+    while ((option = getopt(argc, argv, "hr:m:sp:")) != -1)
     {
         switch (option)
         {
@@ -40,6 +42,14 @@ void parse_arguments(int const argc, char **const argv){
                 }
                break;
         }
+        case 'm':{
+            char *end;
+            markov_steps= strtoul(optarg, &end, 0);
+            if(end==optarg || *end != '\0'){
+                errx(EXIT_FAILURE, "invalid N '%s'", optarg);
+            }
+            break;
+        }
         case 'p': {
                 char *end;
                 p = strtod(optarg, &end)/100.0;
@@ -62,10 +72,15 @@ void parse_arguments(int const argc, char **const argv){
     }
     if (flag_s)
     print_graph_stats(dot_file_name);
-    else if (random_surfer_steps){
+    if (random_surfer_steps){
     graph_t *graph=read_graph(dot_file_name);
     simulate_random_surfer(graph,random_surfer_steps,p);
     free_graph(graph);
+    }
+    if(markov_steps){
+    graph_t *graph=read_graph(dot_file_name);
+    simulate_markov(graph,markov_steps,p);
+    free_graph(graph);   
     }
     exit(EXIT_SUCCESS);
 }
