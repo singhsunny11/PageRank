@@ -19,11 +19,12 @@ node_t *random_out_edge(node_t *node){
   return node->outedges[randu(node->num_out_edges)];
 }
 
-void simulate_random_surfer(graph_t *graph, int steps, double probability) {
-    if (graph->count==0){
-        return;
 
+void simulate_random_surfer(graph_t *graph, int n, double probability) {
+    if (graph->count == 0) {
+        return;
     }
+
     int *visit_count = calloc(graph->count, sizeof(int));
     if (!visit_count) {
         fprintf(stderr, "Memory allocation failed\n");
@@ -31,24 +32,34 @@ void simulate_random_surfer(graph_t *graph, int steps, double probability) {
     }
 
     node_t *current = random_node(graph);
-    printf("Starting at: %s\n", current->name);
 
-    for (int i = 0; i < steps; i++) {
-        if (current->num_out_edges == 0) {                                         //
-            current = random_node(graph);  // Jump to a random node 
+    for (int i=0; i<n; i++) {
+        if (current->num_out_edges == 0) {
+            current = random_node(graph); 
         } else {
-            current = random_out_edge(current);  // Follow a random outedge
+            current = random_out_edge(current);
+        }
+        int current_index = -1;
+        for (int j = 0; j < graph->count; j++) {
+            if (graph->nodes[j] == current) {
+                current_index = j;
+                break;
+            }
         }
 
-        // Count the visit (excluding the initial state)
-        visit_count[current - graph->nodes[0]]++;
+        if (current_index != -1) {
+            visit_count[current_index]++;
+        } else {
+            fprintf(stderr, "Not found in graph");
+            free(visit_count);
+            return;
+        }
     }
 
-    printf("Relative probabilities:\n");
-    for (int i = 0; i < graph->count; i++) {
-        double relative_probability = (double)visit_count[i] / steps;
-        printf("%s %.10f\n", graph->nodes[i]->name, relative_probability);
+    for (int i=0; i<graph->count; i++) {
+        double r_p = (double)visit_count[i]/n;
+        printf("%s %.10f\n", graph->nodes[i]->name, r_p);
     }
 
-    free(visit_count);  // Free the allocated memory
+    free(visit_count);
 }
