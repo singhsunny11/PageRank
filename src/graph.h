@@ -1,7 +1,7 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-typedef struct node{
+typedef struct node{                   //ref from ques 6  ex sheet
     struct node **outedges;
     struct node **inedges;
     int num_edges;
@@ -10,7 +10,7 @@ typedef struct node{
     char* name;
 }node_t;
 
-typedef struct graph{
+typedef struct graph{                  //ref from ques 6  ex sheet
     node_t **nodes;
     int count;
     int edge_count;

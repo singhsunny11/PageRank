@@ -71,7 +71,7 @@ void parse_arguments(int const argc, char **const argv){
             break;
         }
        default:{
-        errx(EXIT_FAILURE, "Unknown option: %c", option);
+               errx(EXIT_FAILURE, "Unknown option: %c", option);
         break;
         } 
     }
