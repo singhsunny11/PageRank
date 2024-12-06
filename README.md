@@ -11,7 +11,7 @@ This project aims to calculate the PageRank of nodes in a directed graph, repres
 ## Execution
 ```bash
 ./pagerank [OPTIONS]... [FILENAME]
-´´´
+```
 
 ### OPTIONS
 - -h : Print a brief overview of the available command line parameters.
@@ -28,8 +28,8 @@ To display all the available command line parameters:
 To simulate the random surfer behavior for 100 steps using the graph described in graph.dot.
 ```bash
 ./pagerank -r 500 graph.dot
-´´´
-To simulate 100 steps of the Markov chain with probability(=15):
 ```
-bash ./ pagerank -m 100 -p 15 prgraph.dot
-´´´
+To simulate 100 steps of the Markov chain with probability(=15):
+```bash
+ ./ pagerank -m 100 -p 15 prgraph.dot
+```
