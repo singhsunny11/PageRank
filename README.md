@@ -13,7 +13,7 @@ This project aims to calculate the PageRank of nodes in a directed graph, repres
 ./pagerank [OPTIONS]... [FILENAME]
 ```
 
-### OPTIONS
+### Options
 - -h : Print a brief overview of the available command line parameters.
 - -r N : Simulate N steps of the random surfer and output the result.
 - -m N : Simulate N steps of the Markov chain and output the result.
