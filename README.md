@@ -9,7 +9,9 @@ This project aims to calculate the PageRank of nodes in a directed graph, repres
 2. Markov Chain Model: This approach leverages mathematical principles to compute PageRank with greater accuracy.
 
 ## Execution
+```bash
 ./pagerank [OPTIONS]... [FILENAME]
+´´´
 
 ### OPTIONS
 - -h : Print a brief overview of the available command line parameters.
